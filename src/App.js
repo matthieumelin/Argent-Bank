@@ -9,6 +9,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // pages
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import UserPage from './pages/UserPage';
 import Error404Page from './pages/Error404Page';
 
 // components
@@ -25,6 +27,8 @@ export default function App() {
       <BrowserRouter>
         <Header />
         <Routes>
+          <Route path='/user' element={<UserPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route index path="/" element={<HomePage />} />
           <Route path="*" element={<Error404Page />} />
         </Routes>

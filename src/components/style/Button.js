@@ -2,71 +2,86 @@ import React from 'react'
 
 // react router dom
 import { Link } from "react-router-dom"
-;
+    ;
 // styled
 import styled from 'styled-components'
 
 // utils
 import { Colors } from '../../utils/style/Colors';
 
-export default function Button({ text, fullWidth = false, center = false, asALink = false, link, handleClick }) {
-    if (asALink) {
-        return (
-            <StyledButtonLink
-                to={link}
-                fullWidth={fullWidth}
-                center={center}
-                onClick={handleClick}>
-                {text}
-            </StyledButtonLink>
-        )
+export default function Button({ type, text, fullWidth = false, width = "0px", center = false, underline = false, to, handleClick }) {
+    switch (type) {
+        case "link":
+            return (
+                <StyledButtonLink
+                    underline={underline}
+                    to={to}
+                    fullWidth={fullWidth}
+                    center={center}
+                    onClick={handleClick}>
+                    {text}
+                </StyledButtonLink>
+            )
+        case "button":
+            return (
+                <StyledButton
+                    underline={underline}
+                    fullWidth={fullWidth}
+                    width={width}
+                    center={center}
+                    onClick={handleClick}
+                    text={text}>
+                    {text}
+                </StyledButton>
+            )
+        default:
+            break;
     }
-    return (
-        <StyledButton
-            fullWidth={fullWidth}
-            center={center}
-            onClick={handleClick}>
-            {text}
-        </StyledButton>
-    )
 }
 
 const StyledButton = styled.button`
 display: block;
-margin: 0;
-padding: 0.75rem 1.5rem;
-border: none;
-border-radius: 0.25rem;
-color: white;
-font-size: 1.2rem;
-font-weight: 700;
-background: ${Colors.darkGreen};
-cursor: pointer;
-transition: all 300ms;
-${(props) => props.fullWidth ? `width: 100%;` : null}
-${(props) => props.center ? `margin: 0 auto;` : null}
-  
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: ${Colors.green};
+  background-color: ${Colors.green};
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
+  width: ${(props) => props.width};
+${(props) => props.fullWidth ? `width: 100%;` : ""}
+${(props) => props.center ? `margin: 0 auto;` : ""}
+${(props) => props.underline ? "text-decoration: underline;" : ""}
+
 &:hover {
+    transition: 0.2s;
     background: ${Colors.veryDarkGreen};
 }
 `;
 const StyledButtonLink = styled(Link)`
 display: block;
-margin: 0;
-padding: 0.75rem 1.5rem;
-border: none;
-border-radius: 0.25rem;
-color: white;
-font-size: 1.2rem;
-font-weight: 700;
-background: ${Colors.darkGreen};
-cursor: pointer;
-transition: all 300ms;
-${(props) => props.fullWidth ? `width: 100%;` : null}
-${(props) => props.center ? `margin: 0 auto;` : null}
-text-decoration: none;
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: ${Colors.green};
+  background-color: ${Colors.green};
+  color: #fff;
+  transition: 0.2s;
+  text-align: center;
+  text-decoration: ${(props) => props.underline ? "underline" : "none"};
 
-&:hover {
+  &:hover {
+    transition: 0.2s;
     background: ${Colors.veryDarkGreen};
 }
+
+@media (min-width: 720px) {
+      width: ${(props) => props.fullWidth ? "100%" : "200px"};
+  }
 `;
