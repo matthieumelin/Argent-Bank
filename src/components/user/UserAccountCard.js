@@ -4,12 +4,15 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from '../style/Button';
 
+// utils
+import { format } from '../../utils/Formatter';
+
 export default function UserAccountCard({ name, amount, status }) {
   return (
     <StyledUserAccountCard>
       <UserAccountWrapper>
         <UserAccountTitle>{name}</UserAccountTitle>
-        <UserAccountAmount>${amount}</UserAccountAmount>
+        <UserAccountAmount>${format(amount)}</UserAccountAmount>
         <UserAccountDescription>{status} Balance</UserAccountDescription>
       </UserAccountWrapper>
       <UserAccountWrapperActions>

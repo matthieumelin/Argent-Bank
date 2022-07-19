@@ -1,7 +1,7 @@
 import React from 'react'
 
 // router
-import Routes from "../routes/Routes";
+import {Routes} from "../routes/Routes";
 
 // styled
 import styled from 'styled-components'
@@ -25,7 +25,7 @@ export default function Error404Page() {
             text="Back to home page"
             fullWidth={true}
             type="link"
-            to="/" />
+            to={Routes.Home} />
         </Container>
       </Main>
     </StyledError404Page>
