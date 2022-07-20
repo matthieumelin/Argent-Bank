@@ -88,6 +88,7 @@ export default function UserPage() {
                 <Header>
                     <HeaderTitle>Welcome back</HeaderTitle>
                     {!editNameMode ? <>
+                        <HeaderName>Tony Jarvis!</HeaderName>
                         {success ? <Alert type="success" message={success} /> : null}
                         <Button type="button" text="Edit Name" width="max-content" center={true} handleClick={() => toggleEditNameMode()} />
                     </>
@@ -144,7 +145,12 @@ const Header = styled.div`
 color: #fff;
 margin-bottom: 2rem;
 `;
-const HeaderTitle = styled.h1``;
+const HeaderTitle = styled.h1`
+margin: 20px 0 0 0;
+`;
+const HeaderName = styled.h2`
+margin: 0 0 20px 0;
+`;
 const HeaderForm = styled.form`
 `;
 const HeaderFormWrapper = styled.div`
