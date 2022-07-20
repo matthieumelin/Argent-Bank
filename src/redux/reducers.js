@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
     name: "user",
     initialState: {
-        email: "",
-        token: "",
+        email: sessionStorage.getItem("email") || "",
+        token: sessionStorage.getItem("token") || "",
     },
     reducers: {
         setEmail: (state, action) => {

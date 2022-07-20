@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 // react router dom
 import { Routes } from '../routes/Routes';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +18,6 @@ import styled from 'styled-components'
 import { Colors } from '../utils/style/Colors';
 import { Errors } from '../utils/error/Errors';
 import { isValidEmail } from '../utils/Formatter';
-import { isNull } from "../utils/Utils";
 
 // font awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,15 +25,12 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 // components
 import Button from '../components/style/Button';
-import Error from '../components/error/Error';
+import Alert from '../components/alert/Alert';
 
 export default function LoginPage() {
     // redux
     const token = useSelector((state) => state.user.token);
     const dispatch = useDispatch();
-
-    // navigate
-    const navigate = useNavigate();
 
     // inputs
     const [inputs, setInputs] = useState({
@@ -53,7 +49,6 @@ export default function LoginPage() {
             ...inputs,
             [event.target.id]: event.target.value
         });
-        console.log(inputs)
     }
 
     /**
@@ -66,28 +61,36 @@ export default function LoginPage() {
         // Verification
         let tempError = "";
 
-        if (isNull(inputs.email)) {
+        if (!inputs.email) {
             tempError = Errors.login.email.required;
         } else if (!isValidEmail(inputs.email)) {
             tempError = Errors.login.email.invalid;
-        } else if (isNull(inputs.password)) {
+        } else if (!inputs.password) {
             tempError = Errors.login.password.required;
         }
 
-        setError(tempError);
+        if (tempError) {
+            setError(tempError);
+        } else {
+            const data = { email: inputs.email, password: inputs.password };
 
-        if (!isNull(error)) {
-            await axios.post("http://localhost:3001/api/v1/user/login", { email: inputs.email, password: inputs.password })
-            .then((response) => {
-                dispatch(setEmail(inputs.email));
-                dispatch(setToken(response.data.body.token));
-            }).catch((error) => {
-                setError(error.response.data.message);
-            })
+            await axios.post("http://localhost:3001/api/v1/user/login", data)
+                .then((response) => {
+                    const jwt = response.data.body.token;
+
+                    // store data in session storage
+                    sessionStorage.setItem("email", inputs.email);
+                    sessionStorage.setItem("token", jwt);
+
+                    dispatch(setEmail(inputs.email));
+                    dispatch(setToken(jwt));
+                }).catch((error) => {
+                    setError(error.response.data.message);
+                })
         }
     }
 
-    if (token) return navigate(Routes.User);
+    if (token) return <Navigate to={Routes.User} />;
 
     return (
         <StyledLoginPage>
@@ -95,11 +98,11 @@ export default function LoginPage() {
                 <LoginContent>
                     <FontAwesomeIcon icon={faUserCircle} />
                     <Title>Sign In</Title>
-                    {!isNull(error) ? <Error message={error} /> : null}
+                    {error ? <Alert type="error" message={error} /> : null}
                     <LoginForm onSubmit={handleSubmit}>
                         <LoginFormGroup>
                             <LoginFormLabel htmlFor="username">E-mail</LoginFormLabel>
-                            <LoginFormInput type="text" id="email" value={inputs.email} onChange={handleInput} />
+                            <LoginFormInput type="email" id="email" value={inputs.email} onChange={handleInput} />
                         </LoginFormGroup>
                         <LoginFormGroup>
                             <LoginFormLabel htmlFor="password">Password</LoginFormLabel>

@@ -17,7 +17,6 @@ export default function Button({ type, text, fullWidth = false, width = "0px", c
                     underline={underline}
                     to={to}
                     fullWidth={fullWidth}
-                    center={center}
                     onClick={handleClick}>
                     {text}
                 </StyledButtonLink>

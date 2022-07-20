@@ -1,7 +1,12 @@
 import React from 'react'
 
+// react router dom
+import { Routes } from '../../routes/Routes';
+
 // styled
 import styled from 'styled-components'
+
+// components
 import Button from '../style/Button';
 
 // utils
@@ -16,7 +21,11 @@ export default function UserAccountCard({ name, amount, status }) {
         <UserAccountDescription>{status} Balance</UserAccountDescription>
       </UserAccountWrapper>
       <UserAccountWrapperActions>
-        <Button type="link" to="/" text="View transactions" />
+        <Button
+          text="View transactions"
+          type="button"
+          width="200px"
+          to={Routes.User} />
       </UserAccountWrapperActions>
     </StyledUserAccountCard>
   )

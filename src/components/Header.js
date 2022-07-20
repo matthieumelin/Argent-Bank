@@ -1,14 +1,19 @@
 import React from 'react'
 
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+import { setEmail, setToken } from '../redux/reducers';
+
 // react router dom
 import { Link } from 'react-router-dom';
+import { Routes } from '../routes/Routes';
 
 // styled components
 import styled from 'styled-components'
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 // assets
 import ArgentBankLogo from "../assets/argent-bank-logo.png";
@@ -17,6 +22,19 @@ import ArgentBankLogo from "../assets/argent-bank-logo.png";
 import { Colors } from '../utils/style/Colors';
 
 export default function Header() {
+    const token = useSelector((state) => state.user.token);
+    const dispatch = useDispatch();
+
+    /**
+     * Logout
+     */
+    const logout = () => {
+        sessionStorage.clear();
+
+        dispatch(setEmail(""));
+        dispatch(setToken(""));
+    }
+
     return (
         <StyledHeader>
             <Navbar>
@@ -28,12 +46,29 @@ export default function Header() {
                 </NavbarLogo>
                 <NavbarSrOnly>Argent Bank</NavbarSrOnly>
                 <NavbarList>
-                    <NavbarListItem>
-                        <NavbarListItemLink to="/login">
-                            <FontAwesomeIcon icon={faUserCircle} style={{marginRight: "0.5rem"}} />
-                            Sign In
-                        </NavbarListItemLink>
-                    </NavbarListItem>
+                    {token ? (
+                        <>
+                            <NavbarListItem>
+                                <NavbarListItemLink to={Routes.User}>
+                                    <FontAwesomeIcon icon={faUserCircle} style={{ marginRight: "0.5rem" }} />
+                                    Connected user
+                                </NavbarListItemLink>
+                            </NavbarListItem>
+                            <NavbarListItem>
+                                <NavbarListItemLink to={Routes.Home} onClick={logout}>
+                                    <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: "0.5rem" }} />
+                                    Sign Out
+                                </NavbarListItemLink>
+                            </NavbarListItem>
+                        </>
+                    ) : (
+                        <NavbarListItem>
+                            <NavbarListItemLink to={Routes.Login}>
+                                <FontAwesomeIcon icon={faUserCircle} style={{ marginRight: "0.5rem" }} />
+                                Sign In
+                            </NavbarListItemLink>
+                        </NavbarListItem>
+                    )}
                 </NavbarList>
             </Navbar>
         </StyledHeader>
