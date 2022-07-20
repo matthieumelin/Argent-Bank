@@ -1,5 +1,8 @@
 import React from 'react'
 
+// react helmet
+import { Helmet } from 'react-helmet-async';
+
 // styled
 import styled from 'styled-components'
 
@@ -15,6 +18,9 @@ import BankTree from "../assets/bank-tree.jpeg";
 export default function HomePage() {
   return (
     <StyledHomePage>
+      <Helmet>
+        <title>Argent Bank - Home</title>
+      </Helmet>
       <Main>
         <Hero>
           <HeroContent>

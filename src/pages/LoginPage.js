@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 
+// react helmet
+import { Helmet } from 'react-helmet-async';
+
 // react router dom
 import { Routes } from '../routes/Routes';
 import { Navigate } from 'react-router-dom';
@@ -94,6 +97,9 @@ export default function LoginPage() {
 
     return (
         <StyledLoginPage>
+            <Helmet>
+                <title>Argent Bank - Login</title>
+            </Helmet>
             <Main>
                 <LoginContent>
                     <FontAwesomeIcon icon={faUserCircle} />

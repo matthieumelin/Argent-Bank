@@ -1,5 +1,8 @@
 import React from 'react'
 
+// react helmet
+import { HelmetProvider } from 'react-helmet-async';
+
 // redux
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
@@ -22,18 +25,20 @@ import { GlobalStyle } from './utils/style/GlobalStyle';
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <GlobalStyle />
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path='/user' element={<UserPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route index path="/" element={<HomePage />} />
-          <Route path="*" element={<Error404Page />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <GlobalStyle />
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path='/user' element={<UserPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route index path="/" element={<HomePage />} />
+            <Route path="*" element={<Error404Page />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </Provider>
+    </HelmetProvider>
   )
 }

@@ -1,5 +1,8 @@
 import React from 'react'
 
+// react helmet
+import { Helmet } from 'react-helmet-async';
+
 // router
 import {Routes} from "../routes/Routes";
 
@@ -15,6 +18,9 @@ import Button from "../components/style/Button";
 export default function Error404Page() {
   return (
     <StyledError404Page>
+      <Helmet>
+        <title>Argent Bank - Error 404</title>
+      </Helmet>
       <Main>
         <Container>
           <Title>404</Title>

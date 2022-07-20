@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 
+// react helmet
+import { Helmet } from 'react-helmet-async';
+
 // react router dom
 import { Navigate } from 'react-router-dom';
 import { Routes } from '../routes/Routes';
@@ -69,7 +72,7 @@ export default function UserPage() {
             .then((response) => {
                 setSuccess(response.data.message);
                 setEditNameMode(false);
-                setInputs({firstname: "", lastname: ""});
+                setInputs({ firstname: "", lastname: "" });
             }).catch(console.error);
     }
 
@@ -78,6 +81,9 @@ export default function UserPage() {
 
     return (
         <StyledUserPage>
+            <Helmet>
+                <title>Argent Bank - User</title>
+            </Helmet>
             <Main>
                 <Header>
                     <HeaderTitle>Welcome back</HeaderTitle>
