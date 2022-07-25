@@ -1,4 +1,4 @@
-# Projet 12 - SportSee
+# Projet 12 - Argent Bank
 
 Code source du Projet 13 - Développez un tableau de bord d'analytics avec React du parcours Développeur d'application - JavaScript React d'OpenClassrooms.
 
